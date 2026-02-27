@@ -1,5 +1,6 @@
-import subprocess
 import csv
+
+import subprocess
 
 
 domains = [
@@ -31,20 +32,20 @@ for domain in domains:
     Count_package = ""
     Ip = ""
 
-    for line_of_ping in result.stdout.split():
-        ping.append(line_of_ping)
+    for word_of_ping in result.stdout.split():
+        ping.append(word_of_ping)
 
         if(count-2>=0 and ping[count-2] == "Среднее"):
-            Rtt = str(line_of_ping)
+            Rtt = str(word_of_ping)
 
         if(count-2>=0 and ping[count-2] == "Ответ" and Ip == ""):
-            Ip = str(line_of_ping[:-1])
+            Ip = str(word_of_ping[:-1])
 
-        if(line_of_ping[0:3] == "TTL" and Ttl == ""):
-            Ttl = str(line_of_ping[4:])
+        if(word_of_ping[0:3] == "TTL" and Ttl == ""):
+            Ttl = str(word_of_ping[4:])
 
         if(count-2>=0 and ping[count-2] == "отправлено" and Count_package == ""):
-            Count_package = str(line_of_ping[:-1])
+            Count_package = str(word_of_ping[:-1])
             
         count+=1
     data.append([Ip, Ttl, Rtt, Count_package])
