@@ -1,11 +1,13 @@
 import time
 import csv
 from datetime import datetime
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
+
 
 driver = webdriver.Chrome()
 driver.get("https://market.yandex.ru/")
@@ -25,10 +27,6 @@ search_button = WebDriverWait(driver, 10).until(
 search_button.click()
 
 time.sleep(5)
-
-# snippets = driver.find_elements(By.CSS_SELECTOR, "[data-baobab-name='productSnippet']")
-
-# time.sleep(5)
 
 max_pages = int(input("Сколько страниц спарсить? (например, 3): "))
 
