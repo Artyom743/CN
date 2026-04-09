@@ -8,15 +8,10 @@ domains = [
     "yandex.ru", 
     "github.com",
     "stackoverflow.com",
-    "rutube.com",
-    "vk.com",
-    "mail.ru",
-    "habr.com",
-    "wikipedia.org",
-    "mail.ru"
+    "rutube.com"
 ]
 
-data = [['IP', 'TTL', 'RTT', 'Count package']]
+data = [['IP', 'TTL', 'RTT', 'Count package', 'Traceroute']]
 
 for domain in domains:
     result = subprocess.run(
@@ -48,12 +43,19 @@ for domain in domains:
             Count_package = str(word_of_ping[:-1])
             
         count+=1
-    data.append([Ip, Ttl, Rtt, Count_package])
+    
+    traceroute_result = ""
+    if Ip:
+        trace = subprocess.run(
+            ["tracert", "-h", "3", Ip],
+            capture_output=True,
+            text=True,
+            encoding='cp866'
+        )
+        traceroute_result = "\n".join(trace.stdout.split("\n"))
+    
+    data.append([Ip, Ttl, Rtt, Count_package, traceroute_result])
 
 with open('task1_output.csv', 'w', encoding='utf-8', newline='') as file:
     writer = csv.writer(file)
     writer.writerows(data)
-    
-
-
-
